@@ -32,9 +32,8 @@ resource "azurerm_linux_web_app" "app" {
           content {
             name       = ip_restriction.value.name
             ip_address = ip_restriction.value.ip_address
-            action     = "Allow"
+            action     = ip_restriction.value.action
             priority   = ip_restriction.value.priority
-            tag        = ip_restriction.value.tag
           }
         }
 
