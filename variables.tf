@@ -79,6 +79,7 @@ variable "custom_tags" {
 variable "ip_restrictions" {
   description = "IPs restrictions list map for App Service. See documentation https://www.terraform.io/docs/providers/azurerm/r/app_service.html#ip_restriction"
   type = list(object({
+    action     = string
     name       = string
     ip_address = string
     priority   = number
