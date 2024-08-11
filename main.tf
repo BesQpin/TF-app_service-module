@@ -25,20 +25,17 @@ resource "azurerm_linux_web_app" "app" {
         always_on             = each.value.site_config.always_on
         ftps_state            = each.value.site_config.ftps_state
         http2_enabled         = each.value.site_config.http2_enabled
-        
-        ip_restriction {
 
-            name       = "DenyAllOthers"
-            ip_address = "0.0.0.0/0"
-            action     = "Deny"
-            priority   = 200
-        }
-        ip_restriction{
 
-            service_tag = "AzureCloud"
-            action      = "Allow"
-            priority    = "99"
-            name        = "AllowAzureCloud"
+        dynamic "ip_restriction" {
+          for_each = var.ip_restrictions
+          content {
+            name       = ip_restriction.value.name
+            ip_address = ip_restriction.value.ip_address
+            action     = "Allow"
+            priority   = ip_restriction.value.priority
+            tag        = ip_restriction.value.tag
+          }
         }
 
         managed_pipeline_mode = each.value.site_config.managed_pipeline_mode
