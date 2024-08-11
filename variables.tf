@@ -83,7 +83,6 @@ variable "ip_restrictions" {
     name       = string
     ip_address = string
     priority   = number
-    tag        = string
   }))
   default = []
 }
