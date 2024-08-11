@@ -37,6 +37,13 @@ resource "azurerm_linux_web_app" "app" {
           }
         }
 
+        ip_restriction {
+          service_tag = "AzureCloud"
+          action      = "Allow"
+          priority    = "99"
+          name        = "AllowAzureCloud"
+        }
+
         managed_pipeline_mode = each.value.site_config.managed_pipeline_mode
         minimum_tls_version   = each.value.site_config.minimum_tls_version
         health_check_path     = each.value.site_config.health_check_path
